@@ -1,0 +1,14 @@
+name: kubernetes-platform
+description: learning exercises with pulumi deployments
+main: pulumi
+stackConfigDir: pulumi/stacks
+options:
+  refresh: always
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: "pulumi-deployments"

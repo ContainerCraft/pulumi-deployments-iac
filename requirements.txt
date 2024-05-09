@@ -1,0 +1,5 @@
+pulumi==3.60.0
+pulumi-civo==2.3.4
+pulumi-kubernetes==4.9.0
+pulumi-pulumiservice==0.20.1
+packaging

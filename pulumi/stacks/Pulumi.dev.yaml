@@ -1,0 +1,6 @@
+config:
+  kubernetes-platform:cert_manager.enable: "true"
+  kubernetes-platform:civo_kubernetes.deploy: "true"
+  kubernetes-platform:pulumi_cloud.deployment: "true"
+environment:
+  - civo
