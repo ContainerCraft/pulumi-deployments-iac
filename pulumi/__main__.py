@@ -57,7 +57,7 @@ if enable:
     cloud_provider = "civo"
     civo_token = config.require_secret("civoApiToken")
     civo_region = config.get("civo_kubernetes.region") or "NYC1"
-    worker_count = config.get_int("civo_kubernetes.worker_count") or 3
+    worker_count = config.get_int("civo_kubernetes.worker_count") or 2
     kubernetes_distribution = config.get("civo_kubernetes.distribution") or "k3s"
 
     # Deploy CIVO Kubernetes Cluster
