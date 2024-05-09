@@ -72,6 +72,8 @@ if enable:
     # Create a Kubernetes Provider from the CIVO Kubernetes Cluster for export
     kubernetes_provider = kubernetes_cluster[1]
 else:
+    cloud_provider = ""
+    kubernetes_distribution = ""
     kubernetes_cluster = (None, None)
 
 ##################################################################################
