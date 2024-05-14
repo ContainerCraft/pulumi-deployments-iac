@@ -16,7 +16,8 @@ def pulumi_cloud_deployment(
         repository_name: str
     ):
 
-    pulumiservice_deploymentsettings = DeploymentSettings("pulumiservice_deploymentsettings",
+    pulumiservice_deploymentsettings = DeploymentSettings(
+        "pulumiservice_deploymentsettings",
         stack="dev",
         project="kubernetes-platform",
         organization="ContainerCraft",
