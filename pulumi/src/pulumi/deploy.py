@@ -18,7 +18,7 @@ def pulumi_cloud_deployment(
 
     pulumiservice_deploymentsettings = DeploymentSettings(
         "pulumiservice_deploymentsettings",
-        stack="dev",
+        stack=stack_name,
         project="kubernetes-platform",
         organization="ContainerCraft",
         agent_pool_id="",
