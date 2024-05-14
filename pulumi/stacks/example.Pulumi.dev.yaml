@@ -1,0 +1,6 @@
+config:
+  kubernetes-platform:civo_kubernetes.deploy: "true"
+  kubernetes-platform:pulumi_cloud.deployment: "true"
+  kubernetes-platform:pulumi_cloud.schedule: "true"
+environment:
+  - civo

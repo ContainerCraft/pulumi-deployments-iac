@@ -98,7 +98,7 @@ else:
 #   ~$ pulumi config set pulumi_cloud.deploy true
 pulumi_cloud_enabled = config.get_bool('pulumi_cloud.deployment') or False
 if pulumi_cloud_enabled:
-    pulumi_cloud_deployments = pulumi_cloud_deployment(
+    pulumi_cloud_deployment = pulumi_cloud_deployment(
         organization_name,
         project_name,
         stack_name,
@@ -114,7 +114,8 @@ if pulumi_cloud_schedule:
     pulumi_schedule(
         organization_name,
         project_name,
-        stack_name
+        stack_name,
+        pulumi_cloud_deployment
     )
 else:
     pulumi_schedule = None

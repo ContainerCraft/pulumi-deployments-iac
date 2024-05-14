@@ -9,6 +9,7 @@ from pulumi_pulumiservice import (
 )
 
 # Deploy Pulumi Cloud Deployments Stack Configuration
+# https://www.pulumi.com/docs/pulumi-cloud/deployments
 def pulumi_cloud_deployment(
         organization_name: str,
         project_name: str,

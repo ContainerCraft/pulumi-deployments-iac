@@ -33,7 +33,8 @@ environment:
 
 ```bash
 pulumi config set civo_kubernetes.deploy true
-pulumi config set pulumi_cloud.deployment false
+pulumi config set pulumi_cloud.schedule true
+pulumi config set pulumi_cloud.deployment true
 ```
 
 7. Deploy the stack
@@ -43,18 +44,9 @@ pulumi preview
 pulumi up
 ```
 
-8. Enable Pulumi Cloud deployments & re-deploy
+8. Destroy the stack
 
 ```bash
-pulumi config set pulumi_cloud.deployment true
-pulumi preview
-pulumi up
-```
-
-9. Destroy the stack
-
-```bash
-pulumi config set pulumi_cloud.deployment false
-pulumi down
+pulumi destroy --refresh=true --skip-preview -y
 pulumi stack rm dev
 ```
