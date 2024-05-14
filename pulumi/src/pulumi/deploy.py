@@ -10,26 +10,26 @@ def pulumi_cloud_deployment(
     ):
 
     pulumiservice_deploymentsettings = pulumiservice.DeploymentSettings("pulumiservice_deploymentsettings",
+        stack="dev",
+        project="kubernetes-platform",
+        organization="ContainerCraft",
         agent_pool_id="",
-        executor_context=pulumiservice.DeploymentSettingsExecutorContextArgs(
-        ),
         github=pulumiservice.DeploymentSettingsGithubArgs(
             deploy_commits=True,
             preview_pull_requests=True,
             pull_request_template=False,
             repository="ContainerCraft/pulumi-deployments-iac",
         ),
-        operation_context=pulumiservice.DeploymentSettingsOperationContextArgs(
-            options=pulumiservice.OperationContextOptionsArgs(),
-        ),
-        organization="ContainerCraft",
-        project="kubernetes-platform",
         source_context=pulumiservice.DeploymentSettingsSourceContextArgs(
             git=pulumiservice.DeploymentSettingsGitSourceArgs(
                 branch="main",
             ),
         ),
-        stack="dev",
+        operation_context=pulumiservice.DeploymentSettingsOperationContextArgs(
+            options=pulumiservice.OperationContextOptionsArgs(),
+        ),
+        #executor_context=pulumiservice.DeploymentSettingsExecutorContextArgs(
+        #),
         opts=pulumi.ResourceOptions(protect=False))
 
     ## Pulumi Cloud: Deployment Configuration
