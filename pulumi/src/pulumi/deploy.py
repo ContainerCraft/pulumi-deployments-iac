@@ -1,5 +1,13 @@
 import pulumi
 import pulumi_pulumiservice as pulumiservice
+#from pulumi_pulumiservice import (
+#    DeploymentSettings,
+#    DeploymentSettingsGithubArgs,
+#    DeploymentSettingsGitSourceArgs,
+#    DeploymentSettingsOperationContextArgs,
+#    DeploymentSettingsSourceContextArgs,
+#    OperationContextOptionsArgs
+#)
 
 # Deploy Pulumi Cloud Deployments Stack Configuration
 def pulumi_cloud_deployment(
@@ -28,8 +36,6 @@ def pulumi_cloud_deployment(
         operation_context=pulumiservice.DeploymentSettingsOperationContextArgs(
             options=pulumiservice.OperationContextOptionsArgs(),
         ),
-        #executor_context=pulumiservice.DeploymentSettingsExecutorContextArgs(
-        #),
         opts=pulumi.ResourceOptions(protect=False))
 
     ## Pulumi Cloud: Deployment Configuration
