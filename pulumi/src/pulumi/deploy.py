@@ -22,12 +22,12 @@ def pulumi_cloud_deployment(
             pull_request_template=True,
             paths=["."]
         ),
-        source_context=pulumiservice.DeploymentSettingsSourceContextArgs(
-            git=pulumiservice.DeploymentSettingsGitSourceArgs(
-                branch="main",
-                repo_dir="."
-            )
-        ),
+        #source_context=pulumiservice.DeploymentSettingsSourceContextArgs(
+        #    git=pulumiservice.DeploymentSettingsGitSourceArgs(
+        #        branch="main",
+        #        repo_dir="."
+        #    )
+        #),
         executor_context=pulumiservice.DeploymentSettingsExecutorContextArgs(
             executor_image="docker.io/pulumi/pulumi"
         ),
