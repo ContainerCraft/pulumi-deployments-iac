@@ -11,27 +11,86 @@ def pulumi_cloud_deployment(
 
     # Pulumi Cloud: Deployment Configuration
     pulumi_cloud_deployment_config = pulumiservice.DeploymentSettings(
-        f"{organization_name}/{project_name}/{stack_name}-deployment",
+        f"{organization_name}-{project_name}-{stack_name}-deployment",
+        organization=organization_name,
+        project=project_name,
         stack=stack_name,
-        project="kubernetes-platform",
-        organization="ContainerCraft",
-        agent_pool_id="",
         github=pulumiservice.DeploymentSettingsGithubArgs(
-            paths=["."],
+            repository=f"{organization_name}/{repository_name}",
             deploy_commits=True,
             preview_pull_requests=True,
             pull_request_template=True,
-            repository=f"ContainerCraft/{repository_name}",
-        ),
-        operation_context=pulumiservice.DeploymentSettingsOperationContextArgs(
-            options=pulumiservice.OperationContextOptionsArgs(),
+            paths=["."]
         ),
         source_context=pulumiservice.DeploymentSettingsSourceContextArgs(
             git=pulumiservice.DeploymentSettingsGitSourceArgs(
                 branch="main",
-            ),
+                repo_dir="."
+            )
         ),
-        opts=pulumi.ResourceOptions(protect=False)
+        executor_context=pulumiservice.DeploymentSettingsExecutorContextArgs(
+            executor_image="docker.io/pulumi/pulumi"
+        ),
+        operation_context=pulumiservice.DeploymentSettingsOperationContextArgs(
+            options=pulumiservice.OperationContextOptionsArgs(
+                delete_after_destroy=False,
+                shell="/bin/bash",
+                skip_install_dependencies=False,
+                skip_intermediate_deployments=False
+            ),
+            #environment_variables={
+            #    "PULUMI_ACCESS_TOKEN": "YOUR_ACCESS_TOKEN",  # Ensure to secure or inject this securely
+            #    "PULUMI_ORG": organization_name,
+            #    "PULUMI_PROJECT": project_name,
+            #    "PULUMI_STACK": stack_name
+            #},
+            #pre_run_commands=[
+            #    "pip install -r requirements.txt",
+            #    "pulumi up --yes"
+            #]
+        ),
+        agent_pool_id="",
+        opts=pulumi.ResourceOptions(
+            protect=False
+        )
     )
 
     return pulumi_cloud_deployment_config
+
+#import pulumi
+#import pulumi_pulumiservice as pulumiservice
+#
+## Deploy Pulumi Cloud Deployments Stack Configuration
+#def pulumi_cloud_deployment(
+#        organization_name: str,
+#        project_name: str,
+#        stack_name: str,
+#        repository_name: str
+#    ):
+#
+#    # Pulumi Cloud: Deployment Configuration
+#    pulumi_cloud_deployment_config = pulumiservice.DeploymentSettings(
+#        f"{organization_name}/{project_name}/{stack_name}-deployment",
+#        stack=stack_name,
+#        project="kubernetes-platform",
+#        organization="ContainerCraft",
+#        agent_pool_id="",
+#        github=pulumiservice.DeploymentSettingsGithubArgs(
+#            paths=["."],
+#            deploy_commits=True,
+#            preview_pull_requests=True,
+#            pull_request_template=True,
+#            repository=f"ContainerCraft/{repository_name}",
+#        ),
+#        operation_context=pulumiservice.DeploymentSettingsOperationContextArgs(
+#            options=pulumiservice.OperationContextOptionsArgs(),
+#        ),
+#        source_context=pulumiservice.DeploymentSettingsSourceContextArgs(
+#            git=pulumiservice.DeploymentSettingsGitSourceArgs(
+#                branch="main",
+#            ),
+#        ),
+#        opts=pulumi.ResourceOptions(protect=False)
+#    )
+#
+#    return pulumi_cloud_deployment_config
