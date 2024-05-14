@@ -116,6 +116,8 @@ if pulumi_cloud_schedule:
         project_name,
         stack_name
     )
+else:
+    pulumi_schedule = None
 
 ##################################################################################
 ## Export Stack Outputs
