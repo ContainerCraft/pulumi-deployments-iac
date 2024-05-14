@@ -21,7 +21,7 @@ def pulumi_cloud_deployment(
             deploy_commits=True,
             preview_pull_requests=True,
             pull_request_template=True,
-            repository="ContainerCraft/pulumi-deployments-iac",
+            repository=f"ContainerCraft/{repository_name}",
         ),
         operation_context=pulumiservice.DeploymentSettingsOperationContextArgs(
             options=pulumiservice.OperationContextOptionsArgs(),
