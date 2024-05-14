@@ -31,7 +31,7 @@ def pulumi_cloud_deployment(
                 branch="main",
             ),
         ),
-        opts=pulumi.ResourceOptions(protect=True)
+        opts=pulumi.ResourceOptions(protect=False)
     )
 
     return pulumi_cloud_deployment_config
