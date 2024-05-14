@@ -11,10 +11,10 @@ def pulumi_cloud_deployment(
 
     # Pulumi Cloud: Deployment Configuration
     pulumi_cloud_deployment_config = pulumiservice.DeploymentSettings(
-        f"{organization_name}-{project_name}-{stack_name}-deployment",
-        organization=organization_name,
-        project=project_name,
+        f"{organization_name}/{project_name}/{stack_name}",
         stack=stack_name,
+        project=project_name,
+        organization=organization_name,
         github=pulumiservice.DeploymentSettingsGithubArgs(
             repository=f"{organization_name}/{repository_name}",
             deploy_commits=True,
@@ -22,12 +22,12 @@ def pulumi_cloud_deployment(
             pull_request_template=True,
             paths=["."]
         ),
-        #source_context=pulumiservice.DeploymentSettingsSourceContextArgs(
-        #    git=pulumiservice.DeploymentSettingsGitSourceArgs(
-        #        branch="main",
-        #        repo_dir="."
-        #    )
-        #),
+        source_context=pulumiservice.DeploymentSettingsSourceContextArgs(
+            git=pulumiservice.DeploymentSettingsGitSourceArgs(
+                branch="main",
+                repo_dir="."
+            )
+        ),
         executor_context=pulumiservice.DeploymentSettingsExecutorContextArgs(
             executor_image="docker.io/pulumi/pulumi"
         ),
