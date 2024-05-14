@@ -27,23 +27,6 @@ project_name = pulumi.get_project()
 stack_name = pulumi.get_stack()
 
 ##################################################################################
-## Pulumi Cloud: Deployment Configuration
-##################################################################################
-
-# Deploy Pulumi Cloud Deployment
-# Check pulumi config 'pulumi_cloud.deploy' and deploy if true
-# Enable Pulumi Cloud Deployment with the following command:
-#   ~$ pulumi config set pulumi_cloud.deploy true
-pulumi_cloud_enabled = config.get_bool('pulumi_cloud.deployment') or False
-if pulumi_cloud_enabled:
-    pulumi_cloud_deployments = pulumi_cloud_deployment(
-        organization_name,
-        project_name,
-        stack_name,
-        repository_name
-    )
-
-##################################################################################
 ## Deploy Kubernetes
 ##################################################################################
 
@@ -103,6 +86,23 @@ if cert_manager_enabled:
     )
 else:
     cert_manager = (None, None)
+
+##################################################################################
+## Pulumi Cloud: Deployment Configuration
+##################################################################################
+
+# Deploy Pulumi Cloud Deployment
+# Check pulumi config 'pulumi_cloud.deploy' and deploy if true
+# Enable Pulumi Cloud Deployment with the following command:
+#   ~$ pulumi config set pulumi_cloud.deploy true
+pulumi_cloud_enabled = config.get_bool('pulumi_cloud.deployment') or False
+if pulumi_cloud_enabled:
+    pulumi_cloud_deployments = pulumi_cloud_deployment(
+        organization_name,
+        project_name,
+        stack_name,
+        repository_name
+    )
 
 ##################################################################################
 ## Export Stack Outputs

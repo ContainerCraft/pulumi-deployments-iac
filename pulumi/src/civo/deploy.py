@@ -28,7 +28,8 @@ def deploy_civo_kubernetes(
         region=civo_region,
         create_default_rules=True,
         opts=pulumi.ResourceOptions(
-            provider=civo_provider
+            provider=civo_provider,
+            depends_on=civo_provider
         )
     )
 
@@ -49,6 +50,7 @@ def deploy_civo_kubernetes(
         firewall_id=firewall.id,
         #kubernetes_version=get_most_recent_kubernetes_version(civo_token),
         opts=pulumi.ResourceOptions(
+            #parent=[],
             depends_on=[firewall],
             provider=civo_provider
         )
@@ -63,7 +65,10 @@ def deploy_civo_kubernetes(
     # Create a Kubernetes Provider for the CIVO Kubernetes Cluster
     kubernetes_provider = k8s.Provider(
         "k8s-provider",
-        kubeconfig=kubeconfig
+        kubeconfig=kubeconfig,
+        opts=pulumi.ResourceOptions(
+            depends_on=[kubernetes_cluster]
+        )
     )
 
     # Export the Kubernetes Provider
