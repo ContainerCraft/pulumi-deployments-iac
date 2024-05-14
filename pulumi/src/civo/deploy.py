@@ -6,7 +6,7 @@ from pulumi_civo import KubernetesClusterPoolsArgs
 # Deploy CIVO Kubernetes Cluster
 def deploy_civo_kubernetes(
         civo_token: str,
-        cluster_name: str,
+        stack_name: str,
         cluster_size: int,
         civo_region: str,
         kubernetes_distribution: str
@@ -14,7 +14,7 @@ def deploy_civo_kubernetes(
 
     # Create CIVO Provider with the CIVO API Token
     civo_provider = civo.Provider(
-        "civo-provider",
+        f"{stack_name}/civo-provider",
         token=civo_token
     )
 
@@ -23,13 +23,13 @@ def deploy_civo_kubernetes(
 
     # Create a CIVO Firewall with default rules
     firewall = civo.Firewall(
-        f"{cluster_name}-firewall",
-        name=cluster_name,
+        f"{stack_name}/firewall",
+        name=stack_name,
         region=civo_region,
         create_default_rules=True,
         opts=pulumi.ResourceOptions(
             provider=civo_provider,
-            depends_on=civo_provider
+            parent=civo_provider
         )
     )
 
@@ -41,8 +41,8 @@ def deploy_civo_kubernetes(
 
     # Create a CIVO Kubernetes Cluster
     kubernetes_cluster = civo.KubernetesCluster(
-        f"{cluster_name}-cluster",
-        name=f"{cluster_name}-cluster",
+        f"{stack_name}/cluster",
+        name=f"{stack_name}-k8s-cluster",
         pools=pools,
         cni="cilium",
         cluster_type=kubernetes_distribution,
@@ -50,6 +50,7 @@ def deploy_civo_kubernetes(
         firewall_id=firewall.id,
         #kubernetes_version=get_most_recent_kubernetes_version(civo_token),
         opts=pulumi.ResourceOptions(
+            parent=civo_provider,
             depends_on=[firewall],
             provider=civo_provider
         )
@@ -63,10 +64,11 @@ def deploy_civo_kubernetes(
 
     # Create a Kubernetes Provider for the CIVO Kubernetes Cluster
     kubernetes_provider = k8s.Provider(
-        "k8s-provider",
+        f"{stack_name}/k8s-provider",
         kubeconfig=kubeconfig,
         opts=pulumi.ResourceOptions(
-            depends_on=[kubernetes_cluster]
+            parent=kubernetes_cluster,
+            depends_on=kubernetes_cluster
         )
     )
 

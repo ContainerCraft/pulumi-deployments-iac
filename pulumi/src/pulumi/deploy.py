@@ -17,17 +17,18 @@ def pulumi_cloud_deployment(
         repository_name: str
     ):
 
+    # https://www.pulumi.com/registry/packages/pulumiservice/api-docs/deploymentsettings
     pulumiservice_deploymentsettings = DeploymentSettings(
-        "pulumiservice_deploymentsettings",
+        f"{stack_name}/deploymentsettings",
         stack=stack_name,
-        project="kubernetes-platform",
-        organization="ContainerCraft",
+        project=project_name,
+        organization=organization_name,
         agent_pool_id="",
         github=DeploymentSettingsGithubArgs(
             deploy_commits=True,
             preview_pull_requests=True,
             pull_request_template=False,
-            repository="ContainerCraft/pulumi-deployments-iac",
+            repository=f"{organization_name}/{repository_name}",
         ),
         source_context=DeploymentSettingsSourceContextArgs(
             git=DeploymentSettingsGitSourceArgs(

@@ -104,6 +104,8 @@ if pulumi_cloud_enabled:
         stack_name,
         repository_name
     )
+else:
+    pulumi_cloud_deployment = None
 
 # Pulumi Cloud Deployment TTL/Drift/Schedule configuration
 # Check pulumi config 'pulumi_cloud.schedule' and deploy if true
@@ -117,8 +119,10 @@ if pulumi_cloud_schedule:
         stack_name,
         pulumi_cloud_deployment
     )
+    # export the url for the Pulumi Deployments Stack Schedule Settings
+    pulumi.export("DeploymentsURL:", f"https://app.pulumi.com/{organization_name}/{project_name}/{stack_name}/settings/schedule")
 else:
-    pulumi_schedule = None
+    pulumi_schedule = (None, None, None, None)
 
 ##################################################################################
 ## Export Stack Outputs
