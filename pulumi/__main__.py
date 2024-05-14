@@ -9,6 +9,7 @@ import pulumi_kubernetes as k8s
 from src.civo.deploy import deploy_civo_kubernetes
 from src.cert_manager.deploy import deploy_cert_manager
 from src.pulumi.deploy import pulumi_cloud_deployment
+from src.pulumi.schedule import pulumi_schedule
 
 ##################################################################################
 # Load the Pulumi Config
@@ -102,6 +103,18 @@ if pulumi_cloud_enabled:
         project_name,
         stack_name,
         repository_name
+    )
+
+# Pulumi Cloud Deployment TTL/Drift/Schedule configuration
+# Check pulumi config 'pulumi_cloud.schedule' and deploy if true
+# Enable Pulumi Cloud Deployment Schedule with the following command:
+#   ~$ pulumi config set pulumi_cloud.schedule true
+pulumi_cloud_schedule = config.get_bool('pulumi_cloud.schedule') or False
+if pulumi_cloud_schedule:
+    pulumi_schedule(
+        organization_name,
+        project_name,
+        stack_name
     )
 
 ##################################################################################
