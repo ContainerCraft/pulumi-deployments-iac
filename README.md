@@ -15,8 +15,8 @@
 
 ```bash
 pulumi login
+pulumi org set-default ContainerCraft
 pulumi stack select --create dev
-pulumi config set civo_kubernetes.deploy true
 vim pulumi/stacks/Pulumi.dev.yaml
 ```
 
