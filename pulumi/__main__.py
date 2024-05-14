@@ -18,7 +18,7 @@ config = pulumi.Config()
 organization_name = config.get("organization") or "ContainerCraft"
 
 # Set the Github repository name from the Pulumi.yaml
-repository_name = config.get("repository") or "pulumi-deployments"
+repository_name = config.get("repository") or "pulumi-deployments-iac"
 
 # Set the Pulumi project name from the Pulumi.yaml
 project_name = pulumi.get_project()

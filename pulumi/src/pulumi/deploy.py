@@ -12,14 +12,14 @@ def pulumi_cloud_deployment(
     # Pulumi Cloud: Deployment Configuration
     pulumi_cloud_deployment_config = pulumiservice.DeploymentSettings(
         f"{organization_name}/{project_name}/{stack_name}-deployment",
-        stack="dev",
+        stack=stack_name,
         project="kubernetes-platform",
         organization="ContainerCraft",
         agent_pool_id="",
         github=pulumiservice.DeploymentSettingsGithubArgs(
-            deploy_commits=True,
             paths=["."],
-            preview_pull_requests=False,
+            deploy_commits=True,
+            preview_pull_requests=True,
             pull_request_template=True,
             repository="ContainerCraft/pulumi-deployments-iac",
         ),

@@ -50,7 +50,6 @@ def deploy_civo_kubernetes(
         firewall_id=firewall.id,
         #kubernetes_version=get_most_recent_kubernetes_version(civo_token),
         opts=pulumi.ResourceOptions(
-            #parent=[],
             depends_on=[firewall],
             provider=civo_provider
         )
