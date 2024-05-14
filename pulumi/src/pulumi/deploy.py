@@ -12,7 +12,6 @@ def pulumi_cloud_deployment(
     pulumiservice_deploymentsettings = pulumiservice.DeploymentSettings("pulumiservice_deploymentsettings",
         agent_pool_id="",
         executor_context=pulumiservice.DeploymentSettingsExecutorContextArgs(
-            executor_image="pulumi/pulumi",
         ),
         github=pulumiservice.DeploymentSettingsGithubArgs(
             deploy_commits=True,
