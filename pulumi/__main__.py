@@ -1,9 +1,8 @@
-"""A Python Pulumi Kubernetes IaC Program"""
+"""A Pulumi Cloud Deployments Python IaC Program"""
+
 # Import python packages
-import os
 import json
 import pulumi
-import pulumi_kubernetes as k8s
 
 # Import python packages from the local src directory
 from src.civo.deploy import deploy_civo_kubernetes
@@ -108,6 +107,7 @@ if pulumi_cloud_enabled:
         stack_name,
         repository_name
     )
+    pulumi.export("PulumiDeploymentsURL:", f"https://app.pulumi.com/{organization_name}/{project_name}/{stack_name}/deployments")
 else:
     pulumi_cloud_deployment = None
 
@@ -124,7 +124,7 @@ if pulumi_cloud_schedule:
         pulumi_cloud_deployment
     )
     # export the url for the Pulumi Deployments Stack Schedule Settings
-    pulumi.export("DeploymentsURL:", f"https://app.pulumi.com/{organization_name}/{project_name}/{stack_name}/settings/schedule")
+    pulumi.export("PulumiScheduleURL:", f"https://app.pulumi.com/{organization_name}/{project_name}/{stack_name}/settings/schedule")
 else:
     pulumi_schedule = (None, None, None, None)
 
@@ -152,3 +152,6 @@ pulumi.export("meta", meta)
 
 # Export the 'versions' dictionary as a stack output in json format
 pulumi.export("versions", versions)
+
+# Export the github repository name as a stack output
+pulumi.export("source", f"https://github.com/{organization_name}/{repository_name}")
