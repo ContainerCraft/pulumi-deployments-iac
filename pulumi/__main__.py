@@ -53,6 +53,9 @@ if enable:
         kubernetes_distribution
     )
 
+    # Export the CIVO Kubernetes Cluster for use in other resources
+    kubernetes_cluster_resource = kubernetes_cluster[0]
+
     # Create a Kubernetes Provider from the CIVO Kubernetes Cluster for export
     kubernetes_provider = kubernetes_cluster[1]
 else:
@@ -67,14 +70,14 @@ else:
 # Cert Manager
 # Check pulumi config 'cert_manager.enable' and deploy if true
 # Enable cert-manager with the following command:
-#   ~$ pulumi config set cert_manager.enable true
+#   ~$ pulumi config set cert_manager.enabled true
 # Set cert-manager version override with the following command:
 #   ~$ pulumi config set cert_manager.version v1.5.3
-cert_manager_enabled = config.get_bool('cert_manager.enable') or False
+cert_manager_enabled = config.get_bool('cert_manager.enabled') or False
 if cert_manager_enabled:
     # Collect Cert Manager Pulumi Configuration
     version = config.get('cert_manager.version') or None
-    cluster = kubernetes_cluster[0]
+    cluster = kubernetes_cluster_resource
     namespace = "cert-manager"
 
     # Deploy cert-manager
@@ -83,7 +86,8 @@ if cert_manager_enabled:
         version,
         kubernetes_distribution,
         kubernetes_provider,
-        kubernetes_cluster[0]
+        kubernetes_cluster_resource,
+        stack_name
     )
 else:
     cert_manager = (None, None)

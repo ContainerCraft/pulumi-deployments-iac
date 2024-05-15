@@ -10,7 +10,8 @@ def deploy_cert_manager(
         version: str,
         kubernetes_distribution: str,
         kubernetes_provider: k8s.Provider,
-        kubernetes_cluster: civo.KubernetesCluster
+        kubernetes_cluster: civo.KubernetesCluster,
+        stack_name: str
     ):
 
     # Create a Namespace
@@ -20,6 +21,7 @@ def deploy_cert_manager(
         ),
         opts=pulumi.ResourceOptions(
             provider = kubernetes_provider,
+            parent=kubernetes_cluster,
             depends_on=[kubernetes_cluster],
             retain_on_delete=True,
             custom_timeouts=pulumi.CustomTimeouts(
@@ -57,6 +59,7 @@ def deploy_cert_manager(
         ),
         opts=pulumi.ResourceOptions(
             provider = kubernetes_provider,
+            parent=namespace,
             depends_on=[namespace],
             custom_timeouts=pulumi.CustomTimeouts(
                 create="8m",
@@ -68,7 +71,7 @@ def deploy_cert_manager(
 
     # Create a Local Self Signed ClusterIssuer
     cluster_issuer_root = CustomResource(
-        "cluster-selfsigned-issuer-root",
+        f"{stack_name}-cluster-selfsigned-issuer-root",
         api_version="cert-manager.io/v1",
         kind="ClusterIssuer",
         metadata={
@@ -80,6 +83,7 @@ def deploy_cert_manager(
         },
         opts=pulumi.ResourceOptions(
             provider = kubernetes_provider,
+            parent=namespace,
             depends_on=[release],
             custom_timeouts=pulumi.CustomTimeouts(
                 create="5m",
@@ -91,7 +95,7 @@ def deploy_cert_manager(
 
     # Create a Local Self Signed Certificate
     cluster_issuer_ca_certificate = CustomResource(
-        "cluster-selfsigned-issuer-ca",
+        f"{stack_name}-cluster-selfsigned-issuer-ca",
         api_version="cert-manager.io/v1",
         kind="Certificate",
         metadata={
@@ -116,6 +120,7 @@ def deploy_cert_manager(
         },
         opts=pulumi.ResourceOptions(
             provider = kubernetes_provider,
+            parent=namespace,
             depends_on=[cluster_issuer_root],
             custom_timeouts=pulumi.CustomTimeouts(
                 create="5m",
@@ -127,7 +132,7 @@ def deploy_cert_manager(
 
     # Create a Local full chain Self Signed ClusterIssuer
     cluster_issuer = CustomResource(
-        "cluster-selfsigned-issuer",
+        f"{stack_name}-cluster-selfsigned-issuer",
         api_version="cert-manager.io/v1",
         kind="ClusterIssuer",
         metadata={
@@ -141,6 +146,7 @@ def deploy_cert_manager(
         },
         opts=pulumi.ResourceOptions(
             provider = kubernetes_provider,
+            parent=namespace,
             depends_on=[cluster_issuer_ca_certificate],
             custom_timeouts=pulumi.CustomTimeouts(
                 create="5m",
