@@ -100,7 +100,7 @@ else:
 # Check pulumi config 'pulumi_cloud.deploy' and deploy if true
 # Enable Pulumi Cloud Deployment with the following command:
 #   ~$ pulumi config set pulumi_cloud.deploy true
-pulumi_cloud_enabled = config.get_bool('pulumi_cloud.deployment') or False
+pulumi_cloud_enabled = config.get_bool('pulumicloud.deployment') or False
 if pulumi_cloud_enabled:
     pulumi_cloud_deployment = pulumi_cloud_deployment(
         organization_name,
@@ -115,7 +115,7 @@ else:
 # Check pulumi config 'pulumi_cloud.schedule' and deploy if true
 # Enable Pulumi Cloud Deployment Schedule with the following command:
 #   ~$ pulumi config set pulumi_cloud.schedule true
-pulumi_cloud_schedule = config.get_bool('pulumi_cloud.schedule') or False
+pulumi_cloud_schedule = config.get_bool('pulumicloud.schedule') or False
 if pulumi_cloud_schedule:
     pulumi_schedule(
         organization_name,

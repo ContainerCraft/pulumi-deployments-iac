@@ -32,9 +32,17 @@ environment:
 > NOTE: First deploy with Pulumi Cloud DeploymentSettings disabled since our stack needs to be created before we can deploy Pulumi Cloud stack deployments configuration.
 
 ```bash
+# Pulumi Project IaC specific settings
+
+# Enable CIVO Infrastructure Deployment
 pulumi config set civo_kubernetes.deploy true
-pulumi config set pulumi_cloud.schedule true
-pulumi config set pulumi_cloud.deployment true
+
+# Enable Pulumi Cloud Stack Deployments Configuration
+pulumi config set pulumicloud.deployment true
+
+# Enable Pulumi Cloud Stack Deployments:
+# - Pulumi Preview Deployments Schedule
+pulumi config set pulumicloud.schedule true
 ```
 
 7. Deploy the stack
