@@ -1,0 +1,4 @@
+config:
+  kubernetes-platform:civo_kubernetes.deploy: "true"
+environment:
+  - civo

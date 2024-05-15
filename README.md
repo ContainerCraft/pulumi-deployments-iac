@@ -58,3 +58,15 @@ pulumi up
 pulumi destroy --refresh=true --skip-preview -y
 pulumi stack rm dev
 ```
+
+---
+
+## Tips
+
+```bash
+# Load the kubeconfig locally for kubectl cli usage
+mkdir ~/.kube && pulumi stack output kubeconfig --show-secrets > ~/.kube/config
+
+# Try a kubectl command like this to list all pods
+kubectl get po -A
+```
