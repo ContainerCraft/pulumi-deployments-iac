@@ -19,17 +19,26 @@ def pulumi_cloud_deployment(
 
     # https://www.pulumi.com/registry/packages/pulumiservice/api-docs/deploymentsettings
     pulumiservice_deploymentsettings = DeploymentSettings(
+        # Arbitrary name for the resource
         f"{stack_name}/deploymentsettings",
+
+        # Pulumi stack, project and organization names
         stack=stack_name,
         project=project_name,
         organization=organization_name,
+
+        # Agent pool ID for deployments
         agent_pool_id="",
+
+        # Github integration configuration
         github=DeploymentSettingsGithubArgs(
             deploy_commits=True,
             preview_pull_requests=True,
             pull_request_template=False,
             repository=f"{organization_name}/{repository_name}",
         ),
+
+        # Source code context configuration
         source_context=DeploymentSettingsSourceContextArgs(
             git=DeploymentSettingsGitSourceArgs(
                 branch="main",
@@ -38,6 +47,7 @@ def pulumi_cloud_deployment(
         operation_context=DeploymentSettingsOperationContextArgs(
             options=OperationContextOptionsArgs(),
         ),
-        opts=pulumi.ResourceOptions(protect=False))
+        opts=pulumi.ResourceOptions(protect=False)
+    )
 
     return pulumiservice_deploymentsettings
